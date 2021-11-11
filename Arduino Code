@@ -1,0 +1,121 @@
+// include the library code:
+#include <LiquidCrystal.h>
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
+const int sensorPin1 = A0;    // pin that the sensor is attached to
+int v1,v2,v3;
+int sensorValue1 = 0;         // the sensor value
+
+
+//////////////////////////////////////////////////////////////////
+int led = 13;
+int out1 = 8;
+int out2 = 10;
+int out3 = 11;
+int out4 = 11;
+
+
+ long tempReading1,val1,tempp;
+ long tempReading2;
+ char d1 = '0';
+  char d2 = '0';
+  char d3 = '0';
+  char d4 = '0';
+#define trigPin 6#define echoPin 7
+int val=1,pos=0;
+
+void setup() {
+       delay(50);
+ Serial.begin(9600);     //initialize serial
+ Serial.println("HELLO ");
+
+ pinMode(13, OUTPUT);   //set pin 13 as output
+  pinMode(out1, OUTPUT);    
+    pinMode(out2, OUTPUT);    
+  digitalWrite(out1, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out2, LOW);   // turn the LED on (HIGH is the voltage level)
+ lcd.begin(20, 4);
+  lcd.clear();
+  // Print a message to the LCD.
+ lcd.setCursor(0, 0);  lcd.print("***VENTILATOR***");
+ delay(1000);
+ // lcd.clear();
+ 
+ }
+
+void loop() {
+  sensorValue1 = analogRead(sensorPin1);
+  v1 = map(sensorValue1, 0, 1023,100,255);
+pos=v1;
+    v2 = map(sensorValue1, 0, 1023,1,20);
+//lcd.setCursor(0, 2);  lcd.print("                  ");      
+//lcd.setCursor(0, 2);  lcd.print("val  = ");      
+//lcd.print(v2);      
+
+    v3 = map(v2, 1, 20,36,13);
+
+if(v3>13&&v3<17){ v3=13;}else
+if(v3>19&&v3<23){ v3=16;}else
+if(v3>22&&v3<27){ v3=19;}else
+if(v3>26&&v3<30){ v3=21;}
+
+
+lcd.setCursor(0, 1);  lcd.print("                  ");      
+lcd.setCursor(0, 1);  lcd.print("B P M  = ");      
+lcd.print(v3);      
+
+
+
+analogWrite(9, 255);
+ digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+v2=v2*100;
+   delay(1000);
+
+   analogWrite(9, 0);
+
+   digitalWrite(led, LOW);   // turn the LED on (HIGH is the voltage level)
+   delay(v2);
+
+
+}
+
+void fwr (){
+ digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out1, LOW);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out2, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out3, LOW);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out4, HIGH);   // turn the LED on (HIGH is the voltage level)
+
+}  
+void rev (){
+   digitalWrite(out1, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out2, LOW);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out3, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out4, LOW);   // turn the LED on (HIGH is the voltage level)
+
+}  
+void right (){
+ digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out1, LOW);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out2, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out3, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out4, LOW);   // turn the LED on (HIGH is the voltage level)
+
+}  
+void left (){
+ digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out1, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out2, LOW);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out3, LOW);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out4, HIGH);   // turn the LED on (HIGH is the voltage level)
+
+}  
+ 
+void stop1 (){
+   digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
+ digitalWrite(out1, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out2, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out3, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(out4, HIGH);   // turn the LED on (HIGH is the voltage level)
+
+}  
